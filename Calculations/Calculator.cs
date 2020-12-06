@@ -31,21 +31,29 @@ namespace Calculations
         {
             double result = 0;
 
-            for (double i = 1; i <= n; i++)
+            for (int i = 1; i <= n; i++)
             {
-                double a = MyPow(-1D, i + 1D);
+                double a = MyPow(-1D, i + 1);
                 result += a / (i * ((double)i + 1));
             }
 
             return result;
         }
 
-        public static double MyPow(double number, double pow)
+        public static double MyPow(double number, int pow)
         {
-            double result = 1;
-            for (int i = 0; i < pow; i++)
+            double result = 1.0;
+            while (pow > 0)
             {
-                result *= number;
+                switch (pow % 2)
+                {
+                    case 1:
+                        result *= number;
+                        break;
+                }
+
+                pow >>= 1;
+                number *= number;
             }
 
             return result;
@@ -143,6 +151,10 @@ namespace Calculations
                 }
 
                 result += Fact(i) / a;
+                if (double.IsInfinity(result))
+                {
+                    break;
+                }
             }
 
             return result;
